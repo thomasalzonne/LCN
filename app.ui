@@ -40,7 +40,7 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QPushButton" name="pushButton_4">
+           <widget class="QPushButton" name="pushreset_x">
             <property name="styleSheet">
              <string notr="true"> background-color: grey;
  border-style: solid;
@@ -70,7 +70,7 @@ max-height:100px;</string>
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_3">
+           <widget class="QPushButton" name="pushreset_y">
             <property name="styleSheet">
              <string notr="true"> background-color: grey;
  border-style: solid;
@@ -100,7 +100,7 @@ max-height:100px;</string>
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="pushreset_z">
             <property name="styleSheet">
              <string notr="true"> background-color: grey;
  border-style: solid;
@@ -130,7 +130,7 @@ max-height:100px;</string>
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="pushreset_all">
             <property name="minimumSize">
              <size>
               <width>102</width>
@@ -179,7 +179,7 @@ max-height:100px;</string>
         <item>
          <layout class="QGridLayout" name="gridLayout">
           <item row="0" column="0">
-           <widget class="QRadioButton" name="radioButton_3">
+           <widget class="QRadioButton" name="radio0_1mm">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -195,7 +195,7 @@ max-height:100px;</string>
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QRadioButton" name="radioButton_2">
+           <widget class="QRadioButton" name="radio1mm">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -208,7 +208,7 @@ max-height:100px;</string>
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QRadioButton" name="radioButton">
+           <widget class="QRadioButton" name="radio10mm">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -242,7 +242,7 @@ max-height:100px;</string>
            </widget>
           </item>
           <item row="2" column="5">
-           <widget class="QPushButton" name="pushButton_9">
+           <widget class="QPushButton" name="Z_up">
             <property name="styleSheet">
              <string notr="true"> background-color:grey;
  border-style: solid;
@@ -258,7 +258,7 @@ max-height:100px;</string>
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>up.png</normaloff>up.png</iconset>
+              <normaloff>assets/up.png</normaloff>assets/up.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -269,7 +269,7 @@ max-height:100px;</string>
            </widget>
           </item>
           <item row="4" column="5">
-           <widget class="QPushButton" name="pushButton_12">
+           <widget class="QPushButton" name="Z_down">
             <property name="styleSheet">
              <string notr="true"> background-color:grey;
  border-style: solid;
@@ -285,7 +285,7 @@ max-height:100px;</string>
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>bottom.png</normaloff>bottom.png</iconset>
+              <normaloff>assets/bottom.png</normaloff>assets/bottom.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -352,7 +352,7 @@ max-height:100px;</string>
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>bottom.png</normaloff>bottom.png</iconset>
+              <normaloff>assets/bottom.png</normaloff>assets/bottom.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -363,7 +363,7 @@ max-height:100px;</string>
            </widget>
           </item>
           <item row="2" column="2">
-           <widget class="QPushButton" name="X_up">
+           <widget class="QPushButton" name="Y_up">
             <property name="styleSheet">
              <string notr="true"> background-color:grey;
  border-style: solid;
@@ -379,7 +379,7 @@ max-height:100px;</string>
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>up.png</normaloff>up.png</iconset>
+              <normaloff>assets/up.png</normaloff>assets/up.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -390,7 +390,7 @@ max-height:100px;</string>
            </widget>
           </item>
           <item row="3" column="3">
-           <widget class="QPushButton" name="pushButton_6">
+           <widget class="QPushButton" name="X_right">
             <property name="styleSheet">
              <string notr="true"> background-color:grey;
  border-style: solid;
@@ -406,7 +406,7 @@ max-height:100px;</string>
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>right.png</normaloff>right.png</iconset>
+              <normaloff>assets/right.png</normaloff>assets/right.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -417,7 +417,7 @@ max-height:100px;</string>
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QPushButton" name="pushButton_5">
+           <widget class="QPushButton" name="X_left">
             <property name="styleSheet">
              <string notr="true"> background-color:grey;
  border-style: solid;
@@ -433,7 +433,7 @@ max-height:100px;</string>
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>left.png</normaloff>left.png</iconset>
+              <normaloff>assets/left.png</normaloff>assets/left.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -546,16 +546,13 @@ max-height:100px;</string>
      <x>0</x>
      <y>0</y>
      <width>1920</width>
-     <height>18</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuConnexion">
     <property name="title">
      <string>Connexion</string>
     </property>
-    <addaction name="actionname"/>
-    <addaction name="separator"/>
-    <addaction name="actionName"/>
    </widget>
    <addaction name="menuConnexion"/>
   </widget>
