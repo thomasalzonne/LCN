@@ -8,10 +8,23 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import serial
 
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+    def blbl(self,s):
+        serialPort = serial.Serial(port = s, baudrate=115200,bytesize=8, timeout=5, stopbits=serial.STOPBITS_ONE)
+        print("connected to : " +s)
+        a = serialPort
+    def mForward(self,a):
+        if a.is_open :
+            a.write(b"GO X10\n")
+            print("moved")
+        else :
+            print("no connection")
+
+    def setupUi(self, MainWindow, a):
+
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1920, 1000)
         MainWindow.setMinimumSize(QtCore.QSize(1920, 1000))
@@ -68,6 +81,8 @@ class Ui_MainWindow(object):
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_4.addItem(spacerItem2)
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton.setMinimumSize(QtCore.QSize(102, 102))
+        self.pushButton.setMaximumSize(QtCore.QSize(102, 102))
         self.pushButton.setStyleSheet(" background-color: grey;\n"
 " border-style: solid;\n"
 " border-width:1px;\n"
@@ -99,52 +114,138 @@ class Ui_MainWindow(object):
         self.verticalLayout.addLayout(self.gridLayout)
         self.gridLayout_2 = QtWidgets.QGridLayout()
         self.gridLayout_2.setObjectName("gridLayout_2")
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_2.setFont(font)
+        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_2.setObjectName("label_2")
+        self.gridLayout_2.addWidget(self.label_2, 1, 2, 1, 1)
+        self.pushButton_9 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_9.setStyleSheet(" background-color:grey;\n"
+" border-style: solid;\n"
+" border-radius:50px;\n"
+" max-width:100px;\n"
+" max-height:100px;\n"
+" min-width:100px;\n"
+" min-height:100px;\n"
+"")
+        self.pushButton_9.setText("")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("up.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButton_9.setIcon(icon)
+        self.pushButton_9.setIconSize(QtCore.QSize(70, 70))
+        self.pushButton_9.setObjectName("pushButton_9")
+        self.gridLayout_2.addWidget(self.pushButton_9, 2, 5, 1, 1)
+        self.pushButton_12 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_12.setStyleSheet(" background-color:grey;\n"
+" border-style: solid;\n"
+" border-radius:50px;\n"
+" max-width:100px;\n"
+" max-height:100px;\n"
+" min-width:100px;\n"
+" min-height:100px;\n"
+"")
+        self.pushButton_12.setText("")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("bottom.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButton_12.setIcon(icon1)
+        self.pushButton_12.setIconSize(QtCore.QSize(70, 70))
+        self.pushButton_12.setObjectName("pushButton_12")
+        self.gridLayout_2.addWidget(self.pushButton_12, 4, 5, 1, 1)
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
         self.label = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label.setFont(font)
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.horizontalLayout_7.addWidget(self.label)
-        self.gridLayout_2.addLayout(self.horizontalLayout_7, 1, 2, 1, 1)
+        self.gridLayout_2.addLayout(self.horizontalLayout_7, 1, 5, 1, 1)
         self.gridLayout_4 = QtWidgets.QGridLayout()
         self.gridLayout_4.setObjectName("gridLayout_4")
-        self.gridLayout_2.addLayout(self.gridLayout_4, 3, 2, 1, 1)
-        self.pushButton_7 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_7.setObjectName("pushButton_7")
-        self.gridLayout_2.addWidget(self.pushButton_7, 2, 0, 1, 1)
-        self.gridLayout_3 = QtWidgets.QGridLayout()
-        self.gridLayout_3.setObjectName("gridLayout_3")
-        self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_5.setObjectName("pushButton_5")
-        self.gridLayout_3.addWidget(self.pushButton_5, 2, 0, 1, 1)
+        self.gridLayout_2.addLayout(self.gridLayout_4, 3, 5, 1, 1)
+        spacerItem4 = QtWidgets.QSpacerItem(70, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_2.addItem(spacerItem4, 3, 4, 1, 1)
+        self.Y_down = QtWidgets.QPushButton(self.centralwidget)
+        self.Y_down.setStyleSheet(" background-color:grey;\n"
+" border-style: solid;\n"
+" border-radius:50px;\n"
+" max-width:100px;\n"
+" max-height:100px;\n"
+" min-width:100px;\n"
+" min-height:100px;\n"
+"")
+        self.Y_down.setText("")
+        self.Y_down.setIcon(icon1)
+        self.Y_down.setIconSize(QtCore.QSize(70, 70))
+        self.Y_down.setObjectName("Y_down")
+        self.gridLayout_2.addWidget(self.Y_down, 4, 2, 1, 1)
+        self.X_up = QtWidgets.QPushButton(self.centralwidget)
+        self.X_up.setStyleSheet(" background-color:grey;\n"
+" border-style: solid;\n"
+" border-radius:50px;\n"
+" max-width:100px;\n"
+" max-height:100px;\n"
+" min-width:100px;\n"
+" min-height:100px;\n"
+"")
+        self.X_up.setText("")
+        self.X_up.setIcon(icon)
+        self.X_up.setIconSize(QtCore.QSize(70, 70))
+        self.X_up.setObjectName("X_up")
+        self.gridLayout_2.addWidget(self.X_up, 2, 2, 1, 1)
         self.pushButton_6 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_6.setStyleSheet(" background-color:grey;\n"
+" border-style: solid;\n"
+" border-radius:50px;\n"
+" max-width:100px;\n"
+" max-height:100px;\n"
+" min-width:100px;\n"
+" min-height:100px;\n"
+"")
+        self.pushButton_6.setText("")
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap("right.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButton_6.setIcon(icon2)
+        self.pushButton_6.setIconSize(QtCore.QSize(70, 70))
         self.pushButton_6.setObjectName("pushButton_6")
-        self.gridLayout_3.addWidget(self.pushButton_6, 2, 2, 1, 1)
-        self.gridLayout_2.addLayout(self.gridLayout_3, 3, 0, 1, 1)
-        self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_2.setObjectName("label_2")
-        self.gridLayout_2.addWidget(self.label_2, 1, 0, 1, 1)
-        self.pushButton_8 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_8.setObjectName("pushButton_8")
-        self.gridLayout_2.addWidget(self.pushButton_8, 4, 0, 1, 1)
-        self.pushButton_9 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_9.setObjectName("pushButton_9")
-        self.gridLayout_2.addWidget(self.pushButton_9, 2, 2, 1, 1)
-        self.pushButton_12 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_12.setObjectName("pushButton_12")
-        self.gridLayout_2.addWidget(self.pushButton_12, 4, 2, 1, 1)
-        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_2.addItem(spacerItem4, 1, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.pushButton_6, 3, 3, 1, 1)
+        self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_5.setStyleSheet(" background-color:grey;\n"
+" border-style: solid;\n"
+" border-radius:50px;\n"
+" max-width:100px;\n"
+" max-height:100px;\n"
+" min-width:100px;\n"
+" min-height:100px;\n"
+"")
+        self.pushButton_5.setText("")
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap("left.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButton_5.setIcon(icon3)
+        self.pushButton_5.setIconSize(QtCore.QSize(70, 70))
+        self.pushButton_5.setObjectName("pushButton_5")
+        self.gridLayout_2.addWidget(self.pushButton_5, 3, 1, 1, 1)
+        spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_2.addItem(spacerItem5, 2, 6, 1, 1)
+        spacerItem6 = QtWidgets.QSpacerItem(20, 600, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Maximum)
+        self.gridLayout_2.addItem(spacerItem6, 5, 2, 1, 1)
+        spacerItem7 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_2.addItem(spacerItem7, 0, 2, 1, 1)
+        spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_2.addItem(spacerItem8, 3, 0, 1, 1)
         self.verticalLayout.addLayout(self.gridLayout_2)
-        self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
-        self.verticalLayout.addLayout(self.horizontalLayout_6)
         self.horizontalLayout_2.addLayout(self.verticalLayout)
         self.horizontalLayout.addLayout(self.horizontalLayout_2)
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
         self.tabWidget.setMinimumSize(QtCore.QSize(0, 0))
-        self.tabWidget.setMaximumSize(QtCore.QSize(1000, 16777215))
+        self.tabWidget.setMaximumSize(QtCore.QSize(1200, 16777215))
         self.tabWidget.setObjectName("tabWidget")
         self.tab3d = QtWidgets.QWidget()
         self.tab3d.setObjectName("tab3d")
@@ -166,18 +267,12 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-        self.actionname = QtWidgets.QAction(MainWindow)
-        self.actionname.setObjectName("actionname")
-        self.actionName = QtWidgets.QAction(MainWindow)
-        self.actionName.setObjectName("actionName")
-        self.menuConnexion.addAction(self.actionname)
-        self.menuConnexion.addSeparator()
-        self.menuConnexion.addAction(self.actionName)
         self.menubar.addAction(self.menuConnexion.menuAction())
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.X_up.clicked.connect(lambda: self.mForward(a))
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -189,27 +284,34 @@ class Ui_MainWindow(object):
         self.radioButton_3.setText(_translate("MainWindow", "0,1mm"))
         self.radioButton_2.setText(_translate("MainWindow", "1mm"))
         self.radioButton.setText(_translate("MainWindow", "10mm"))
-        self.label.setText(_translate("MainWindow", "Z"))
-        self.pushButton_7.setText(_translate("MainWindow", "PushButton"))
-        self.pushButton_5.setText(_translate("MainWindow", "PushButton"))
-        self.pushButton_6.setText(_translate("MainWindow", "PushButton"))
         self.label_2.setText(_translate("MainWindow", "X/Y"))
-        self.pushButton_8.setText(_translate("MainWindow", "PushButton"))
-        self.pushButton_9.setText(_translate("MainWindow", "PushButton"))
-        self.pushButton_12.setText(_translate("MainWindow", "PushButton"))
+        self.label.setText(_translate("MainWindow", "Z"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab3d), _translate("MainWindow", "impr.3D"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tablaser), _translate("MainWindow", "Laser"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabfraiseuse), _translate("MainWindow", "Fraiseuse"))
         self.menuConnexion.setTitle(_translate("MainWindow", "Connexion"))
-        self.actionname.setText(_translate("MainWindow", "name"))
-        self.actionName.setText(_translate("MainWindow", "Name"))
+        available = []
+        for i in range(256):
+            try:
+                s = serial.Serial('COM'+str(i))
+                available.append( (s.portstr))
+
+            except serial.SerialException:
+                pass
+        for s in available:
+            self.actionname = QtWidgets.QAction(MainWindow)
+            self.actionname.setObjectName("actionname")
+            self.menuConnexion.addAction(self.actionname)
+            self.actionname.setText(_translate("MainWindow", s))
+            self.actionname.triggered.connect(lambda: self.blbl(s))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
+    a = serial.Serial(port = "COM4", baudrate=115200,bytesize=8, timeout=5, stopbits=serial.STOPBITS_ONE)
     ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
+    ui.setupUi(MainWindow,a)
     MainWindow.show()
     sys.exit(app.exec_())

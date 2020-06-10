@@ -40,15 +40,15 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        def blbl(port):
-            serialPort = serial.Serial(port = port, baudrate=115200,bytesize=8, timeout=5, stopbits=serial.STOPBITS_ONE)
-            print("connected to : " +port)
+        def blbl():
+            serialPort = serial.Serial(port = s, baudrate=115200,bytesize=8, timeout=5, stopbits=serial.STOPBITS_ONE)
+            print("connected to : " +s)
 
-        available = ["a","b"]
+        available = []
         for i in range(256):
             try:
                 s = serial.Serial('COM'+str(i))
-                # available.append( (s.portstr))
+                available.append( (s.portstr))
 
             except serial.SerialException:
                 pass
@@ -56,13 +56,12 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.pushButton.setText(_translate("MainWindow", "Avancer"))
         self.menuConnexion.setTitle(_translate("MainWindow", "Connexion"))
-        for i in range(0,len(available)):
-            print(available[i])
+        for s in available:
             self.actionname = QtWidgets.QAction(MainWindow)
             self.actionname.setObjectName("actionname")
             self.menuConnexion.addAction(self.actionname)
-            self.actionname.setText(_translate("MainWindow", available[i]))
-            self.actionname.triggered.connect(lambda: blbl(available[i]))
+            self.actionname.setText(_translate("MainWindow", s))
+            self.actionname.triggered.connect(blbl)
 
 
 

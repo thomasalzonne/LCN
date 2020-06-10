@@ -131,6 +131,18 @@ max-height:100px;</string>
           </item>
           <item>
            <widget class="QPushButton" name="pushButton">
+            <property name="minimumSize">
+             <size>
+              <width>102</width>
+              <height>102</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>102</width>
+              <height>102</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true"> background-color: grey;
  border-style: solid;
@@ -213,9 +225,87 @@ max-height:100px;</string>
         <item>
          <layout class="QGridLayout" name="gridLayout_2">
           <item row="1" column="2">
+           <widget class="QLabel" name="label_2">
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>X/Y</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="5">
+           <widget class="QPushButton" name="pushButton_9">
+            <property name="styleSheet">
+             <string notr="true"> background-color:grey;
+ border-style: solid;
+ border-radius:50px;
+ max-width:100px;
+ max-height:100px;
+ min-width:100px;
+ min-height:100px;
+</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>up.png</normaloff>up.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>70</width>
+              <height>70</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="5">
+           <widget class="QPushButton" name="pushButton_12">
+            <property name="styleSheet">
+             <string notr="true"> background-color:grey;
+ border-style: solid;
+ border-radius:50px;
+ max-width:100px;
+ max-height:100px;
+ min-width:100px;
+ min-height:100px;
+</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>bottom.png</normaloff>bottom.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>70</width>
+              <height>70</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="5">
            <layout class="QHBoxLayout" name="horizontalLayout_7">
             <item>
              <widget class="QLabel" name="label">
+              <property name="font">
+               <font>
+                <pointsize>20</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
               <property name="text">
                <string>Z</string>
               </property>
@@ -226,67 +316,177 @@ max-height:100px;</string>
             </item>
            </layout>
           </item>
-          <item row="3" column="2">
+          <item row="3" column="5">
            <layout class="QGridLayout" name="gridLayout_4"/>
           </item>
-          <item row="2" column="0">
-           <widget class="QPushButton" name="pushButton_7">
-            <property name="text">
-             <string>PushButton</string>
+          <item row="3" column="4">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <layout class="QGridLayout" name="gridLayout_3">
-            <item row="2" column="0">
-             <widget class="QPushButton" name="pushButton_5">
-              <property name="text">
-               <string>PushButton</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="2">
-             <widget class="QPushButton" name="pushButton_6">
-              <property name="text">
-               <string>PushButton</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>X/Y</string>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
             </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>70</width>
+              <height>20</height>
+             </size>
             </property>
-           </widget>
+           </spacer>
           </item>
-          <item row="4" column="0">
-           <widget class="QPushButton" name="pushButton_8">
+          <item row="4" column="2">
+           <widget class="QPushButton" name="Y_down">
+            <property name="styleSheet">
+             <string notr="true"> background-color:grey;
+ border-style: solid;
+ border-radius:50px;
+ max-width:100px;
+ max-height:100px;
+ min-width:100px;
+ min-height:100px;
+</string>
+            </property>
             <property name="text">
-             <string>PushButton</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>bottom.png</normaloff>bottom.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>70</width>
+              <height>70</height>
+             </size>
             </property>
            </widget>
           </item>
           <item row="2" column="2">
-           <widget class="QPushButton" name="pushButton_9">
+           <widget class="QPushButton" name="X_up">
+            <property name="styleSheet">
+             <string notr="true"> background-color:grey;
+ border-style: solid;
+ border-radius:50px;
+ max-width:100px;
+ max-height:100px;
+ min-width:100px;
+ min-height:100px;
+</string>
+            </property>
             <property name="text">
-             <string>PushButton</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>up.png</normaloff>up.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>70</width>
+              <height>70</height>
+             </size>
             </property>
            </widget>
           </item>
-          <item row="4" column="2">
-           <widget class="QPushButton" name="pushButton_12">
+          <item row="3" column="3">
+           <widget class="QPushButton" name="pushButton_6">
+            <property name="styleSheet">
+             <string notr="true"> background-color:grey;
+ border-style: solid;
+ border-radius:50px;
+ max-width:100px;
+ max-height:100px;
+ min-width:100px;
+ min-height:100px;
+</string>
+            </property>
             <property name="text">
-             <string>PushButton</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>right.png</normaloff>right.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>70</width>
+              <height>70</height>
+             </size>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
-           <spacer name="horizontalSpacer">
+          <item row="3" column="1">
+           <widget class="QPushButton" name="pushButton_5">
+            <property name="styleSheet">
+             <string notr="true"> background-color:grey;
+ border-style: solid;
+ border-radius:50px;
+ max-width:100px;
+ max-height:100px;
+ min-width:100px;
+ min-height:100px;
+</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>left.png</normaloff>left.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>70</width>
+              <height>70</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="6">
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="5" column="2">
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Maximum</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>600</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="2">
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="3" column="0">
+           <spacer name="horizontalSpacer_3">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -299,9 +499,6 @@ max-height:100px;</string>
            </spacer>
           </item>
          </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_6"/>
         </item>
        </layout>
       </item>
@@ -317,7 +514,7 @@ max-height:100px;</string>
       </property>
       <property name="maximumSize">
        <size>
-        <width>1000</width>
+        <width>1200</width>
         <height>16777215</height>
        </size>
       </property>
@@ -364,11 +561,20 @@ max-height:100px;</string>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionname">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>name</string>
    </property>
   </action>
   <action name="actionName">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Name</string>
    </property>
