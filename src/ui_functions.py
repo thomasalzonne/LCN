@@ -47,6 +47,9 @@ def setupActions(MainWindow, ui, logic):
     ui.pushreset_z.setStyleSheet(logic.pushhover)
     ui.pushreset_all.setStyleSheet(logic.pushhover)
 
+    ui.adminbutton.clicked.connect(lambda: logic.cc())
+    ui.unlockadmin.triggered.connect(lambda: logic.unlockadminmode(ui))
+    ui.lockadmin.triggered.connect(lambda: logic.lockadminmode(ui))
 def updateDisplay(ui, logic):
     if logic.step == 0.1:
         ui.push0_1mm.setStyleSheet("background-color: #3d5885;\n"

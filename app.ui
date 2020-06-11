@@ -308,17 +308,85 @@ max-height:80px;</string>
         </item>
         <item>
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="3" column="4">
-           <spacer name="horizontalSpacer">
+          <item row="4" column="7">
+           <widget class="QLabel" name="coor_Z">
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Z : </string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="label_2">
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>X/Y</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QPushButton" name="X_left">
+            <property name="styleSheet">
+             <string notr="true"> background-color:grey;
+ border-style: solid;
+ border-radius:50px;
+ max-width:100px;
+ max-height:100px;
+ min-width:100px;
+ min-height:100px;
+</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>assets/left.png</normaloff>assets/left.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>70</width>
+              <height>70</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <spacer name="horizontalSpacer_3">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="6">
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>70</width>
+              <width>40</width>
               <height>20</height>
              </size>
             </property>
@@ -351,36 +419,6 @@ max-height:80px;</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="2">
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="1" column="2">
-           <widget class="QLabel" name="label_2">
-            <property name="font">
-             <font>
-              <pointsize>20</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>X/Y</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
           <item row="4" column="5">
            <widget class="QPushButton" name="Z_down">
             <property name="styleSheet">
@@ -408,21 +446,87 @@ max-height:80px;</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="2">
-           <spacer name="verticalSpacer_3">
+          <item row="0" column="2">
+           <spacer name="verticalSpacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Maximum</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
               <width>20</width>
-              <height>600</height>
+              <height>40</height>
              </size>
             </property>
            </spacer>
+          </item>
+          <item row="1" column="5">
+           <layout class="QHBoxLayout" name="horizontalLayout_7">
+            <item>
+             <widget class="QLabel" name="label">
+              <property name="font">
+               <font>
+                <pointsize>20</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Z</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="7">
+           <widget class="QLabel" name="label_3">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Coordonnées</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="7">
+           <widget class="QLabel" name="coor_X">
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>X :</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="7">
+           <widget class="QLabel" name="coor_Y">
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Y : </string>
+            </property>
+           </widget>
           </item>
           <item row="3" column="3">
            <widget class="QPushButton" name="X_right">
@@ -478,83 +582,6 @@ max-height:80px;</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="6">
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="1" column="5">
-           <layout class="QHBoxLayout" name="horizontalLayout_7">
-            <item>
-             <widget class="QLabel" name="label">
-              <property name="font">
-               <font>
-                <pointsize>20</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string>Z</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item row="3" column="1">
-           <widget class="QPushButton" name="X_left">
-            <property name="styleSheet">
-             <string notr="true"> background-color:grey;
- border-style: solid;
- border-radius:50px;
- max-width:100px;
- max-height:100px;
- min-width:100px;
- min-height:100px;
-</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset>
-              <normaloff>assets/left.png</normaloff>assets/left.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>70</width>
-              <height>70</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="5">
-           <layout class="QGridLayout" name="gridLayout_4"/>
-          </item>
-          <item row="3" column="0">
-           <spacer name="horizontalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
           <item row="2" column="5">
            <widget class="QPushButton" name="Z_up">
             <property name="styleSheet">
@@ -582,65 +609,43 @@ max-height:80px;</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="7">
-           <widget class="QLabel" name="label_3">
-            <property name="minimumSize">
+          <item row="3" column="4">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
              <size>
-              <width>100</width>
-              <height>0</height>
+              <width>70</width>
+              <height>20</height>
              </size>
             </property>
-            <property name="font">
-             <font>
-              <pointsize>20</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
+           </spacer>
+          </item>
+          <item row="3" column="5">
+           <layout class="QGridLayout" name="gridLayout_4"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QLineEdit" name="admin_input">
+            <property name="readOnly">
+             <bool>true</bool>
             </property>
-            <property name="text">
-             <string>Coordonnées</string>
+            <property name="placeholderText">
+             <string>Passez en mode administrateur pour dévérouiller cette section</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="7">
-           <widget class="QLabel" name="coor_Y">
-            <property name="font">
-             <font>
-              <pointsize>20</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
+          <item>
+           <widget class="QPushButton" name="adminbutton">
             <property name="text">
-             <string>Y : </string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="7">
-           <widget class="QLabel" name="coor_Z">
-            <property name="font">
-             <font>
-              <pointsize>20</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Z : </string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="7">
-           <widget class="QLabel" name="coor_X">
-            <property name="font">
-             <font>
-              <pointsize>20</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>X :</string>
+             <string>Entrer</string>
             </property>
            </widget>
           </item>
@@ -705,7 +710,7 @@ max-height:80px;</string>
      <x>0</x>
      <y>0</y>
      <width>1920</width>
-     <height>18</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuConnexion">
@@ -713,7 +718,15 @@ max-height:80px;</string>
      <string>Connexion</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuAdminMode">
+    <property name="title">
+     <string>AdminMode</string>
+    </property>
+    <addaction name="unlockadmin"/>
+    <addaction name="lockadmin"/>
+   </widget>
    <addaction name="menuConnexion"/>
+   <addaction name="menuAdminMode"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionname">
@@ -733,6 +746,16 @@ max-height:80px;</string>
    </property>
    <property name="text">
     <string>Name</string>
+   </property>
+  </action>
+  <action name="unlockadmin">
+   <property name="text">
+    <string>Déverouiller mode admin</string>
+   </property>
+  </action>
+  <action name="lockadmin">
+   <property name="text">
+    <string>Vérouiller mode admin</string>
    </property>
   </action>
  </widget>

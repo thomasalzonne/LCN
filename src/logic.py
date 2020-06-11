@@ -45,6 +45,15 @@ class Logic(QtCore.QObject):
         "}\n"
         "")
 
+    def cc(self):
+        print("cc")
+
+    def unlockadminmode(self, ui):
+        ui.admin_input.setReadOnly(False)
+        print("admin mode actif")
+    def lockadminmode(self, ui):
+        ui.admin_input.setReadOnly(True)
+        print("admin mode désactivé")
     def checkSerial(self):
         if self.serialPort and self.serialPort.is_open:
             return True
@@ -64,13 +73,14 @@ class Logic(QtCore.QObject):
         print("connected to : " +s)
         self.serialPort = serialPort
         time.sleep(6)
-        while self.serialPort.inWaiting() == 0:
-            print("xx")
-        self.consoletext(ui,self.serialPort)
-        time.sleep(0.5)
-        self.consoletext(ui,self.serialPort)
-        time.sleep(2)
-        self.serialPort.write(b"G91\n")
+        ui.loading.hide()
+        # while self.serialPort.inWaiting() == 0:
+        #     print("xx")
+        # self.consoletext(ui,self.serialPort)
+        # time.sleep(0.5)
+        # self.consoletext(ui,self.serialPort)
+        # time.sleep(2)
+        # self.serialPort.write(b"G91\n")
 
     def machineMove(self, move, ui):
         moved = move.encode()
