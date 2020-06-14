@@ -1,7 +1,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QIntValidator
 import serial
 
-def setupMenu(MainWindow, ui, logic):
+def setupMenu(MainWindow, ui, logic, thread):
     available = []
     for i in range(256):
         try:
@@ -15,13 +16,9 @@ def setupMenu(MainWindow, ui, logic):
     ui.menuConnexion.setTitle(_translate("MainWindow", "Connexion"))
 
     for s in available:
-        a = 0
-        setattr(ui,"actionname"+str(a),QtWidgets.QAction(MainWindow))
-        ui.menuConnexion.addAction(getattr(ui,"actionname"+str(a)))
-        getattr(ui,"actionname"+str(a)).setText(_translate("MainWindow", s))
-        getattr(ui,"actionname"+str(a)).triggered.connect(lambda: logic.setSerialPort(s, ui))
-        a += 1
-
+        ui.menuname.setTitle(_translate("MainWindow", s))
+        ui.actionConnect.triggered.connect(lambda: logic.setSerialPort(s, ui, thread))
+        ui.actionDeconnexion.triggered.connect(lambda: logic.decoSerialPort(logic.serialPort,ui))
 def setupActions(MainWindow, ui, logic):
     ui.Y_up.clicked.connect(lambda: logic.move("Y", 1, ui))
     ui.Y_down.clicked.connect(lambda: logic.move("Y", -1, ui))
@@ -29,6 +26,8 @@ def setupActions(MainWindow, ui, logic):
     ui.X_left.clicked.connect(lambda: logic.move("X", -1, ui))
     ui.Z_up.clicked.connect(lambda: logic.move("Z", 1, ui))
     ui.Z_down.clicked.connect(lambda: logic.move("Z", -1, ui))
+    ui.E_up.clicked.connect(lambda: logic.move("E", 1, ui))
+    ui.E_down.clicked.connect(lambda: logic.move("E", -1, ui))
 
     ui.push0_1mm.clicked.connect(lambda: logic.setStep(0.1,ui))
     ui.push1mm.clicked.connect(lambda: logic.setStep(1,ui))
@@ -39,17 +38,42 @@ def setupActions(MainWindow, ui, logic):
     ui.pushreset_z.clicked.connect(lambda: logic.reset("Z",ui))
     ui.pushreset_all.clicked.connect(lambda: logic.resetall(ui))
     ui.textBrowser.setText(logic.console)
-    ui.coor_X.setText(logic.coor_X)
-    ui.coor_Y.setText(logic.coor_Y)
-    ui.coor_Z.setText(logic.coor_Z)
+    ui.coor_X.setText(logic.coor_X + str(logic.posX))
+    ui.coor_Y.setText(logic.coor_Y + str(logic.posY))
+    ui.coor_Z.setText(logic.coor_Z + str(logic.posZ))
+    ui.coor_E.setText(logic.coor_E + str(logic.posE))
     ui.pushreset_x.setStyleSheet(logic.pushhover)
     ui.pushreset_y.setStyleSheet(logic.pushhover)
     ui.pushreset_z.setStyleSheet(logic.pushhover)
     ui.pushreset_all.setStyleSheet(logic.pushhover)
-
-    ui.adminbutton.clicked.connect(lambda: logic.cc())
+    ui.adminbutton.setEnabled(False)
+    ui.adminbutton.clicked.connect(lambda: logic.sendcommand(ui))
     ui.unlockadmin.triggered.connect(lambda: logic.unlockadminmode(ui))
     ui.lockadmin.triggered.connect(lambda: logic.lockadminmode(ui))
+    ui.onlyInt = QIntValidator()
+    ui.einput.setValidator(ui.onlyInt)
+    ui.speedinput.setValidator(ui.onlyInt)
+    ui.tempinput.setValidator(ui.onlyInt)
+    ui.bedinput.setValidator(ui.onlyInt)
+    ui.pushButton_6.setStyleSheet("background-color:white;""border:none")
+    ui.pushButton_5.setStyleSheet("background-color:white;""border:none")
+    ui.gotoImp.clicked.connect(lambda: logic.gotoImpr(ui))
+    ui.gotoLaser.clicked.connect(lambda: logic.gotolaser(ui))
+    ui.gotoFraiseuse.clicked.connect(lambda: logic.gotofraise(ui))
+    ui.gotoImp.clicked.connect(lambda: logic.setgoto(ui))
+    ui.gotoLaser.clicked.connect(lambda: logic.setgoto(ui))
+    ui.gotoFraiseuse.clicked.connect(lambda: logic.setgoto(ui))
+    ui.pwdinput.setEchoMode(QtWidgets.QLineEdit.Password)
+    ui.speedinput.setEnabled(False)
+    ui.speedbutton.setEnabled(False)
+    ui.tempinput.setEnabled(False)
+    ui.tempbutton.setEnabled(False)
+    ui.lockadminpanelbutton.setEnabled(False)
+    ui.pwdbutton.clicked.connect(lambda: logic.login(ui))
+    ui.lockadminpanelbutton.clicked.connect(lambda: logic.lockadminpanel(ui))
+    ui.gotoImp.clicked.connect(logic.openwindow)
+
+
 def updateDisplay(ui, logic):
     if logic.step == 0.1:
         ui.push0_1mm.setStyleSheet("background-color: #3d5885;\n"

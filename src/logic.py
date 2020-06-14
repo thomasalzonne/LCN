@@ -1,28 +1,35 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'test.ui'
-#
-# Created by: PyQt5 UI code generator 5.13.0
-#
-# WARNING! All changes made in this file will be lost!
-
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 import serial
 import time
+import _thread
 
+class Thread(QtCore.QObject):
+    def __init__(self,ui,logic):
+        self.ui = ui
+        self.console= logic.console
+    def createthread(self, name, ui, serialPort):
+        _thread.start_new_thread(name,(self,self.ui,serialPort,self.console))
 class Logic(QtCore.QObject):
-    def __init__(self):
+    updateConsoleSignal = QtCore.pyqtSignal()
+    def __init__(self, app):
+        super().__init__()
+        self.app = app
         self.serialPort = False
+        self.pwd = "azerty31"
         self.step = 1 #mm
         self.posX = 0.0
         self.posY = 0.0
         self.posZ = 0.0
+        self.posE = 0.0
+        self.F = 1500
         self.console = "Console :\n"
         self.coor_X = "X : "
         self.coor_Y = "Y : "
         self.coor_Z = "Z : "
+        self.coor_E = "E : "
+        self.currentTab = False
         self.pushstyle=("border-style: solid;\n"
+        "font-weight: bold;\n"
         "border-width:1px;\n"
         "border-radius: 20px;\n"
         "min-width:120px;\n"
@@ -33,65 +40,64 @@ class Logic(QtCore.QObject):
         "background-color: grey;\n"
         " border-style: solid;\n"
         " border-width:1px;\n"
-        " border-radius:50px;\n"
-        "min-width:100px;\n"
-        "min-height:100px;\n"
-        "max-width:100px;\n"
-        "max-height:100px;"
+        " border-radius:35px;\n"
+        "min-width:70px;\n"
+        "min-height:70px;\n"
+        "max-width:70px;\n"
+        "max-height:70px;"
         "}\n"
         "\n"
         "QPushButton:hover{\n"
         "background-color:#3d5885;\n"
         "}\n"
         "")
-
-    def cc(self):
-        print("cc")
-
-    def unlockadminmode(self, ui):
-        ui.admin_input.setReadOnly(False)
-        print("admin mode actif")
-    def lockadminmode(self, ui):
-        ui.admin_input.setReadOnly(True)
-        print("admin mode désactivé")
+        self.updateConsoleSignal.connect(self.updateConsole)
+    def updateConsole(self):
+        self.app.ui.textBrowser.setText(self.console)
+        self.app.ui.textBrowser.moveCursor(QtGui.QTextCursor.End)
+    def sendcommand(self, ui):
+        if self.serialPort and self.serialPort.is_open:
+            print(ui.admin_input.text())
+            self.machineMove(ui.admin_input.text()+"\n", ui)
+            ui.admin_input.setText("")
+        else:
+            print("COM not connected")
     def checkSerial(self):
         if self.serialPort and self.serialPort.is_open:
             return True
         else:
             return False
-
-    def consoletext(self, ui, serialPort):
-        time.sleep(0.20)
-        while serialPort.inWaiting():
-            text ="\t"+self.serialPort.readline().decode()
-            self.console =self.console +text
-        ui.textBrowser.setText(self.console)
-        ui.textBrowser.moveCursor(QtGui.QTextCursor.End)
-
-    def setSerialPort(self, s ,ui):
+    def consoletext(self,thread,ui,serialPort, console):
+        while True:
+            text =self.serialPort.readline().decode()
+            self.console =self.console + text
+            self.updateConsoleSignal.emit()
+    def setSerialPort(self, s ,ui, thread):
         serialPort = serial.Serial(port = s, baudrate=9600,bytesize=8, timeout=2, stopbits=serial.STOPBITS_ONE)
         print("connected to : " +s)
+        ui.loggedlabel.setText("Connected")
+        ui.loggedlabel.setStyleSheet("color:green;")
         self.serialPort = serialPort
-        time.sleep(6)
-        ui.loading.hide()
-        # while self.serialPort.inWaiting() == 0:
-        #     print("xx")
-        # self.consoletext(ui,self.serialPort)
-        # time.sleep(0.5)
-        # self.consoletext(ui,self.serialPort)
-        # time.sleep(2)
-        # self.serialPort.write(b"G91\n")
-
+        thread.createthread(self.consoletext,ui,self.serialPort)
+        self.serialPort.write(b"G91\n")
+    def decoSerialPort(self, serialPort, ui):
+        if self.serialPort and self.serialPort.is_open:
+            self.serialPort.close()
+            ui.loggedlabel.setText("Deconnected")
+            ui.loggedlabel.setStyleSheet("color:red;")
+            print("déconnexion")
+        else:
+            print("COM not connected")
     def machineMove(self, move, ui):
         moved = move.encode()
         self.serialPort.write(moved)
-        self.console =self.console + moved.decode()
+        moved = ">>>" + moved.decode()
+        self.console =self.console + moved
         ui.textBrowser.moveCursor(QtGui.QTextCursor.End)
-        self.consoletext(ui, self.serialPort)
-        ui.coor_X.setText(self.coor_X+str(self.posX))
-        ui.coor_Y.setText(self.coor_Y+str(self.posY))
-        ui.coor_Z.setText(self.coor_Z+str(self.posZ))
-
+        ui.coor_X.setText(self.coor_X + str(self.posX))
+        ui.coor_Y.setText(self.coor_Y + str(self.posY))
+        ui.coor_Z.setText(self.coor_Z + str(self.posZ))
+        ui.coor_E.setText(self.coor_E + str(self.posE))
     def reset(self, axis, ui):
         if self.serialPort and self.serialPort.is_open:
             if axis == "X":
@@ -128,20 +134,24 @@ class Logic(QtCore.QObject):
             print("All positions were reseted")
         else :
             print("COM not connected")
-
     def move(self, axis, direction, ui):
         if self.serialPort and self.serialPort.is_open:
-            move = "G0 "+axis+str(direction*self.step)+" F1500\n"
+            move = "G0 " + axis + str( direction * self.step ) + " F" + str(self.F) + "\n"
             if axis == "X":
                 self.posX += direction*self.step
+                move = "G0 " + axis + str( self.posX ) + " F" + str(self.F) + "\n"
             if axis == "Y":
                 self.posY += direction*self.step
+                move = "G0 " + axis + str( dself.posY ) + " F" + str(self.F) + "\n"
             if axis == "Z":
                 self.posZ += direction*self.step
+                move = "G0 " + axis + str( self.posZ ) + " F" + str(self.F) + "\n"
+            if axis == "E":
+                self.posE += direction*self.step
+                move = "G0 " + axis + str( self.posE ) + " F" + str(self.F) + "\n"
             self.machineMove(move, ui)
         else:
             print("COM not connected")
-
     def setStep(self,step,ui):
         self.step=step
         if self.step == 0.1:
@@ -156,3 +166,47 @@ class Logic(QtCore.QObject):
             ui.push0_1mm.setStyleSheet(self.pushstyle + "background-color: grey;\n")
             ui.push1mm.setStyleSheet(self.pushstyle + "background-color: grey;\n")
             ui.push10mm.setStyleSheet(self.pushstyle + "background-color: #3d5885;\n")
+    def gotoImpr(self,ui):
+        ui.tabWidget.setCurrentWidget(ui.tab3d)
+    def gotolaser(self,ui):
+        ui.tabWidget.setCurrentWidget(ui.tablaser)
+    def gotofraise(self,ui):
+        ui.tabWidget.setCurrentWidget(ui.tabfraiseuse)
+    def setgoto(self,ui):
+        self.currentTab = ui.tabWidget.currentIndex()
+        if self.currentTab == 0:
+            ui.gotoImp.setStyleSheet(self.pushstyle + "background-color:#3d5885;\n")
+            ui.gotoLaser.setStyleSheet(self.pushstyle + "background-color: grey;\n")
+            ui.gotoFraiseuse.setStyleSheet(self.pushstyle + "background-color: grey;\n")
+        elif self.currentTab == 1:
+            ui.gotoImp.setStyleSheet(self.pushstyle + "background-color: grey;\n")
+            ui.gotoLaser.setStyleSheet(self.pushstyle + "background-color: #3d5885;\n")
+            ui.gotoFraiseuse.setStyleSheet(self.pushstyle +"background-color: grey;\n")
+        elif self.currentTab == 2:
+            ui.gotoImp.setStyleSheet(self.pushstyle + "background-color: grey;\n")
+            ui.gotoLaser.setStyleSheet(self.pushstyle + "background-color: grey;\n")
+            ui.gotoFraiseuse.setStyleSheet(self.pushstyle + "background-color: #3d5885;\n")
+    def login(self,ui):
+        if self.pwd == ui.pwdinput.text():
+            ui.speedinput.setEnabled(True)
+            ui.speedbutton.setEnabled(True)
+            ui.tempinput.setEnabled(True)
+            ui.tempbutton.setEnabled(True)
+            ui.lockadminpanelbutton.setEnabled(True)
+            ui.admin_input.setReadOnly(False)
+            ui.adminbutton.setEnabled(True)
+            ui.admin_input.setPlaceholderText("Entrer votre commande")
+        else :
+            print("wrong pwd")
+    def lockadminpanel(self,ui):
+        ui.speedinput.setEnabled(False)
+        ui.speedbutton.setEnabled(False)
+        ui.tempinput.setEnabled(False)
+        ui.tempbutton.setEnabled(False)
+        ui.lockadminpanelbutton.setEnabled(False)
+        ui.admin_input.setReadOnly(True)
+        ui.adminbutton.setEnabled(False)
+        ui.admin_input.setPlaceholderText("Passer en mode administrateur pour dévérouiller cette section")
+
+    def openwindow(self):
+            self.app.secwindow.show()
