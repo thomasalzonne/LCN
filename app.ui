@@ -1068,13 +1068,56 @@ QPushButton:hover{
          </widget>
         </item>
         <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_24">
+          <item>
+           <spacer name="horizontalSpacer_8">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="gettemperature">
+            <property name="minimumSize">
+             <size>
+              <width>300</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Obtenir la température</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_9">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
          <layout class="QHBoxLayout" name="horizontalLayout_6">
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_5">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_8">
               <item>
-               <widget class="QPushButton" name="pushButton_2">
+               <widget class="QPushButton" name="stopetemp">
                 <property name="minimumSize">
                  <size>
                   <width>50</width>
@@ -1133,7 +1176,7 @@ QPushButton:hover{
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton">
+               <widget class="QPushButton" name="startetemp">
                 <property name="minimumSize">
                  <size>
                   <width>50</width>
@@ -1202,6 +1245,27 @@ QPushButton:hover{
               </item>
              </layout>
             </item>
+            <item>
+             <widget class="QLabel" name="extrudortemperature">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>20</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
           <item>
@@ -1222,7 +1286,7 @@ QPushButton:hover{
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_9">
               <item>
-               <widget class="QPushButton" name="pushButton_4">
+               <widget class="QPushButton" name="stopbedtemp">
                 <property name="minimumSize">
                  <size>
                   <width>50</width>
@@ -1273,7 +1337,7 @@ QPushButton:hover{
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_3">
+               <widget class="QPushButton" name="startbedtemp">
                 <property name="minimumSize">
                  <size>
                   <width>50</width>
@@ -1342,6 +1406,27 @@ QPushButton:hover{
               </item>
              </layout>
             </item>
+            <item>
+             <widget class="QLabel" name="bedtemperature">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>20</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
          </layout>
@@ -1370,6 +1455,47 @@ QPushButton:hover{
        <attribute name="title">
         <string>Fraiseuse</string>
        </attribute>
+      </widget>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Charger fichier</string>
+       </attribute>
+       <widget class="QPushButton" name="loadfiles">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>50</y>
+          <width>151</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Charger</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="savebutton">
+        <property name="geometry">
+         <rect>
+          <x>300</x>
+          <y>50</y>
+          <width>181</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Save</string>
+        </property>
+       </widget>
+       <widget class="QPlainTextEdit" name="gcodefile">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>90</y>
+          <width>681</width>
+          <height>791</height>
+         </rect>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="tabadmin">
        <property name="enabled">
@@ -1561,7 +1687,7 @@ QPushButton:hover{
      <x>0</x>
      <y>0</y>
      <width>1920</width>
-     <height>18</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuConnexion">

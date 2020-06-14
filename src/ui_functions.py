@@ -71,8 +71,14 @@ def setupActions(MainWindow, ui, logic):
     ui.lockadminpanelbutton.setEnabled(False)
     ui.pwdbutton.clicked.connect(lambda: logic.login(ui))
     ui.lockadminpanelbutton.clicked.connect(lambda: logic.lockadminpanel(ui))
-    ui.gotoImp.clicked.connect(logic.openwindow)
-
+    ui.speedbutton.clicked.connect(lambda: logic.changespeed(ui))
+    ui.tempbutton.clicked.connect(lambda: logic.settemp(ui))
+    ui.gettemperature.clicked.connect(logic.gettemp)
+    ui.bedtemperature.setText(str(logic.tempbed))
+    ui.extrudortemperature.setText(str(logic.tempextru))
+    # ui.gotoImp.clicked.connect(logic.openwindow)
+    ui.loadfiles.clicked.connect(lambda: logic.openFileNameDialog(ui))
+    ui.savebutton.clicked.connect(lambda: logic. savefile(ui))
 
 def updateDisplay(ui, logic):
     if logic.step == 0.1:

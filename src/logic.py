@@ -2,6 +2,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import serial
 import time
 import _thread
+import os
+import os.path
+import sys
+from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QFileDialog
 
 class Thread(QtCore.QObject):
     def __init__(self,ui,logic):
@@ -22,6 +26,7 @@ class Logic(QtCore.QObject):
         self.posZ = 0.0
         self.posE = 0.0
         self.F = 1500
+        self.tempsec = 3
         self.console = "Console :\n"
         self.coor_X = "X : "
         self.coor_Y = "Y : "
@@ -52,6 +57,8 @@ class Logic(QtCore.QObject):
         "}\n"
         "")
         self.updateConsoleSignal.connect(self.updateConsole)
+        self.tempextru = 0.0
+        self.tempbed = 0.0
     def updateConsole(self):
         self.app.ui.textBrowser.setText(self.console)
         self.app.ui.textBrowser.moveCursor(QtGui.QTextCursor.End)
@@ -72,6 +79,16 @@ class Logic(QtCore.QObject):
             text =self.serialPort.readline().decode()
             self.console =self.console + text
             self.updateConsoleSignal.emit()
+            if text.lstrip().startswith("T"):
+                temp = text.split("B")
+                extru = temp[0].split(":")
+                bed = temp[1].split(":")
+                extrudortemp = extru[1].split(" ")
+                bedtemp = bed[1].split(" ")
+                self.tempbed = bedtemp[0]
+                self.tempextru = extrudortemp[0]
+                ui.extrudortemperature.setText(str(self.tempextru))
+                ui.bedtemperature.setText(str(self.tempbed))
     def setSerialPort(self, s ,ui, thread):
         serialPort = serial.Serial(port = s, baudrate=9600,bytesize=8, timeout=2, stopbits=serial.STOPBITS_ONE)
         print("connected to : " +s)
@@ -142,7 +159,7 @@ class Logic(QtCore.QObject):
                 move = "G0 " + axis + str( self.posX ) + " F" + str(self.F) + "\n"
             if axis == "Y":
                 self.posY += direction*self.step
-                move = "G0 " + axis + str( dself.posY ) + " F" + str(self.F) + "\n"
+                move = "G0 " + axis + str( self.posY ) + " F" + str(self.F) + "\n"
             if axis == "Z":
                 self.posZ += direction*self.step
                 move = "G0 " + axis + str( self.posZ ) + " F" + str(self.F) + "\n"
@@ -207,6 +224,44 @@ class Logic(QtCore.QObject):
         ui.admin_input.setReadOnly(True)
         ui.adminbutton.setEnabled(False)
         ui.admin_input.setPlaceholderText("Passer en mode administrateur pour dévérouiller cette section")
-
-    def openwindow(self):
-            self.app.secwindow.show()
+    def changespeed(self,ui):
+        speed = ui.speedinput.text()
+        self.F = speed
+        print("speed changed")
+    def settemp(self, ui):
+        temp = ui.tempinput.text()
+        self.tempsec = temp
+        print("gettemp changed")
+    def gettemp(self):
+        command = "M155 S" + str(self.tempsec) + "\n"
+        self.serialPort.write(command.encode())
+    def savefile(self , ui):
+        homedir = os.path.expanduser("~/Desktop")
+        text = ui.gcodefile.toPlainText()
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        fileName, _ = QFileDialog.getSaveFileName(ui.tabWidget,"Sauvegarder votre fichier Gcode",homedir,"Gcode Files (*.gcode)", options=options)
+        file_exists = os.path.isfile(fileName)
+        if file_exists:
+            os.remove(fileName)
+            f = open(fileName, "a")
+            f.write(text)
+            f.close()
+        else:
+            f = open(fileName, "a")
+            f.write(text)
+            f.close()
+        print("saved")
+    def loaded(self,txt , ui):
+        f = open(txt, "r")
+        text = f.read()
+        f.close()
+        ui.gcodefile.setPlainText(text)
+        ui.gcodefile.setReadOnly(False)
+    def openFileNameDialog(self,ui):
+        homedir = os.path.expanduser("~/Desktop")
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        fileName, _ = QFileDialog.getOpenFileName(ui.tabWidget,"Choisissez votre fichier Gcode", homedir ,"Gcode Files (*.gcode)", options=options)
+        if fileName:
+            self.loaded(fileName, ui)
