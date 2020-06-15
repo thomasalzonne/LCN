@@ -5,7 +5,8 @@ import _thread
 import os
 import os.path
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QFileDialog
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QFileDialog, QPushButton, QMessageBox
 
 class Thread(QtCore.QObject):
     def __init__(self,ui,logic):
@@ -59,9 +60,10 @@ class Logic(QtCore.QObject):
         self.updateConsoleSignal.connect(self.updateConsole)
         self.tempextru = 0.0
         self.tempbed = 0.0
+        self.prog = ""
+        self.countok = 0
     def updateConsole(self):
         self.app.ui.textBrowser.setText(self.console)
-        self.app.ui.textBrowser.moveCursor(QtGui.QTextCursor.End)
     def sendcommand(self, ui):
         if self.serialPort and self.serialPort.is_open:
             print(ui.admin_input.text())
@@ -77,6 +79,8 @@ class Logic(QtCore.QObject):
     def consoletext(self,thread,ui,serialPort, console):
         while True:
             text =self.serialPort.readline().decode()
+            if text == "ok\n":
+                self.countok += 1
             self.console =self.console + text
             self.updateConsoleSignal.emit()
             if text.lstrip().startswith("T"):
@@ -235,6 +239,8 @@ class Logic(QtCore.QObject):
     def gettemp(self):
         command = "M155 S" + str(self.tempsec) + "\n"
         self.serialPort.write(command.encode())
+    def stopgetTemp(self):
+        self.serialPort.write("M155 S0\n".encode())
     def savefile(self , ui):
         homedir = os.path.expanduser("~/Desktop")
         text = ui.gcodefile.toPlainText()
@@ -252,7 +258,8 @@ class Logic(QtCore.QObject):
             f.write(text)
             f.close()
         print("saved")
-    def loaded(self,txt , ui):
+    def loaded(self, txt, ui):
+        self.prog = txt
         f = open(txt, "r")
         text = f.read()
         f.close()
@@ -265,3 +272,65 @@ class Logic(QtCore.QObject):
         fileName, _ = QFileDialog.getOpenFileName(ui.tabWidget,"Choisissez votre fichier Gcode", homedir ,"Gcode Files (*.gcode)", options=options)
         if fileName:
             self.loaded(fileName, ui)
+    def infowindow(self,tabname, ui):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Question)
+        msg.setIconPixmap(QPixmap("./assets/" + tabname).scaled(64,64))
+        msg.setText("Bonjour, c'est la page d'information de " + tabname)
+        msg.setWindowTitle(tabname)
+        msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        msg.exec_()
+    def readprog(self,serialPort,command):
+        if self.serialPort and self.serialPort.is_open:
+            tableau = []
+            subarray = []
+            for i in range(0, len(command)) :
+                commande = command[i] + "\n"
+                if not commande.startswith(';'):
+                    if not commande.startswith('\n'):
+                        subarray.append(commande)
+                        if len(subarray) == 8:
+                            tableau.append(subarray)
+                            subarray=[]
+                        if i == len(command):
+                            tableau.append(subarray)
+            for a in range (0, len(tableau)):
+                subtableau = tableau[a]
+                self.countok = 1
+                i = 0
+                while self.countok != 8:
+                    time.sleep(0.2)
+                    commande = subtableau[i].encode()
+                    self.serialPort.write(commande)
+                    commande = ">>>" + commande.decode()
+                    self.console =self.console + commande
+                    print(self.countok)
+                    i += 1
+        else:
+            print("COM not connected")
+    def launchProg(self, ui):
+        f = open(self.prog, "r")
+        text = f.read()
+        f.close()
+        command = text.split("\n")
+        _thread.start_new_thread(self.readprog,(self.serialPort, command))
+    def setlaservalue(self, ui):
+        ui.laserslidervalue.setText(str(ui.sliderlaser.value()))
+    def setfraiseusevalue(self, ui):
+        ui.fraiseuseslidervalue.setText(str(ui.fraiseuseslider
+
+        .value()))
+    def startbedTemp(self, ui):
+        command = "M140 S"+str(ui.bedinput.text()) + "\n"
+        self.serialPort.write(command.encode())
+        print("temp bed started")
+    def startextrudorTemp(self, ui):
+        command = "M104 S" + str(ui.einput.text()) + "\n"
+        self.serialPort.write(command.encode())
+        print("temp extrudor started")
+    def stopbedTemp(self):
+        command = "M140 S0\n"
+        self.serialPort.write(command.encode())
+    def stopextrudorTemp(self):
+        command = "M104 S0\n"
+        self.serialPort.write(command.encode())

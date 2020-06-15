@@ -74,11 +74,27 @@ def setupActions(MainWindow, ui, logic):
     ui.speedbutton.clicked.connect(lambda: logic.changespeed(ui))
     ui.tempbutton.clicked.connect(lambda: logic.settemp(ui))
     ui.gettemperature.clicked.connect(logic.gettemp)
+    ui.stopgettemp.clicked.connect(logic.stopgetTemp)
     ui.bedtemperature.setText(str(logic.tempbed))
     ui.extrudortemperature.setText(str(logic.tempextru))
-    # ui.gotoImp.clicked.connect(logic.openwindow)
+
+    ui.gotoImp.clicked.connect(lambda: logic.infowindow(ui.gotoImp.text(), ui))
+    ui.gotoLaser.clicked.connect(lambda: logic.infowindow(ui.gotoLaser.text(), ui))
+    ui.gotoFraiseuse.clicked.connect(lambda: logic.infowindow(ui.gotoFraiseuse.text(), ui))
+
     ui.loadfiles.clicked.connect(lambda: logic.openFileNameDialog(ui))
-    ui.savebutton.clicked.connect(lambda: logic. savefile(ui))
+    ui.savebutton.clicked.connect(lambda: logic.savefile(ui))
+    ui.launchprog.clicked.connect(lambda: logic.launchProg(ui))
+
+    ui.laserslidervalue.setText("0")
+    ui.sliderlaser.valueChanged.connect(lambda : logic.setlaservalue(ui))
+    ui.fraiseuseslidervalue.setText("0")
+    ui.fraiseuseslider.valueChanged.connect(lambda : logic.setfraiseusevalue(ui))
+
+    ui.startetemp.clicked.connect(lambda : logic.startextrudorTemp(ui))
+    ui.startbedtemp.clicked.connect(lambda : logic.startbedTemp(ui))
+    ui.stopbedtemp.clicked.connect(logic.stopbedTemp)
+    ui.stopetemp.clicked.connect(logic.stopextrudorTemp)
 
 def updateDisplay(ui, logic):
     if logic.step == 0.1:
